@@ -26,9 +26,6 @@ const About = () => {
           <div className="user">Back-End Developer and Testor</div>
         </h1>
 
-        <h1>
-          Varun Jethani <div className="user">Chat-Bot Developer</div>
-        </h1>
       </div>
       <div className="new">
         <section>
