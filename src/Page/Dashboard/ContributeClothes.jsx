@@ -4,29 +4,33 @@ import { motion } from "framer-motion";
 import IMG from "./truck.png";
 import axios from "axios";
 const ContributeFood = () => {
-  const[donation, setDonation] = useState({
-    wasteType:'clothwaste',
-    quantity: '',
-    address: '',
-    phone: '',  
-    donorToAgentMsg: '',
-    collectionTime: '',
+  const [donation, setDonation] = useState({
+    wasteType: "clothwaste",
+    quantity: "",
+    address: "",
+    phone: "",
+    donorToAgentMsg: "",
+    collectionTime: "",
   });
 
   const handleChange = (e) => {
-    setDonation({...donation ,[e.target.name]: e.target.value});
+    setDonation({ ...donation, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
-    try{
-      const response = await axios.post('http://localhost:4000/api/donor/donate',{donation} ,{
-        withCredentials: true,
-      });
+    try {
+      const response = await axios.post(
+        "https://eco-eats-backend.vercel.app/api/donor/donate",
+        { donation },
+        {
+          withCredentials: true,
+        }
+      );
       console.log(response.data);
-    }catch(error){
+    } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <div className="Contribute">
@@ -86,12 +90,7 @@ const ContributeFood = () => {
         </label>
         <label htmlFor="donationPic">
           Upload a pic of your Food
-          <input
-            type="file"
-            name="donationPic"
-            id=""
-            onChange={handleChange}
-          />
+          <input type="file" name="donationPic" id="" onChange={handleChange} />
         </label>
         <button className="contributebtn" type="submit">
           Submit

@@ -37,7 +37,7 @@ const Signup = () => {
     ) {
       try {
         const response = await axios.post(
-          "http://localhost:4000/api/auth/signup",
+          "https://eco-eats-backend.vercel.app/api/auth/signup",
           formData
         );
         console.log("Registration successful");
@@ -61,15 +61,36 @@ const Signup = () => {
           <div className="inputss">
             <div className="input">
               <FaRegUser className="img" />
-              <input type="text" placeholder="firstname" name="firstName" id="" value={firstName} onChange={handleChange} />
+              <input
+                type="text"
+                placeholder="firstname"
+                name="firstName"
+                id=""
+                value={firstName}
+                onChange={handleChange}
+              />
             </div>
             <div className="input">
               <FaRegUser className="img" />
-              <input type="text" placeholder="lastname" name="lastName" id="" value={lastName} onChange={handleChange}/>
+              <input
+                type="text"
+                placeholder="lastname"
+                name="lastName"
+                id=""
+                value={lastName}
+                onChange={handleChange}
+              />
             </div>
             <div className="input">
               <MdAlternateEmail className="img" />
-              <input type="email" placeholder="E-mail" name="email" id="" value={email} onChange={handleChange} />
+              <input
+                type="email"
+                placeholder="E-mail"
+                name="email"
+                id=""
+                value={email}
+                onChange={handleChange}
+              />
             </div>
             <div className="input">
               <RiLockPasswordFill className="img" />

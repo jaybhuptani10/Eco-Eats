@@ -27,7 +27,7 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/api/agent/dashboard",
+          "https://eco-eats-backend.vercel.app/api/agent/dashboard",
           {
             withCredentials: true,
           }
@@ -69,7 +69,7 @@ const Dashboard = () => {
       const fetchDonations = async () => {
         try {
           const response = await axios.get(
-            "http://localhost:4000/api/agent/donations/pending",
+            "https://eco-eats-backend.vercel.app/api/agent/donations/pending",
             {
               withCredentials: true,
             }
@@ -90,7 +90,7 @@ const Dashboard = () => {
       const fetchDonations = async () => {
         try {
           const response = await axios.get(
-            "http://localhost:4000/api/agent/donations/accepted",
+            "https://eco-eats-backend.vercel.app/api/agent/donations/accepted",
             {
               withCredentials: true,
             }
@@ -111,7 +111,7 @@ const Dashboard = () => {
       const fetchDonations = async () => {
         try {
           const response = await axios.get(
-            "http://localhost:4000/api/agent/donations/rejected",
+            "https://eco-eats-backend.vercel.app/api/agent/donations/rejected",
             {
               withCredentials: true,
             }

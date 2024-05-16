@@ -20,7 +20,7 @@ const ContributeFood = () => {
   const handleSubmit = async (e) => {
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/donor/donate",
+        "https://eco-eats-backend.vercel.app/api/donor/donate",
         { donation },
         {
           withCredentials: true,

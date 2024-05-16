@@ -22,16 +22,17 @@ const Login = () => {
 
       try {
         const response = await axios.post(
-          "http://localhost:4000/api/auth/login",formData,{
-            withCredentials: true
+          "https://eco-eats-backend.vercel.app/api/auth/login",
+          formData,
+          {
+            withCredentials: true,
           }
-          
         );
-        console.log("Login Successful")
-        const{role} = response.data;
-        if(role === "donor"){
+        console.log("Login Successful");
+        const { role } = response.data;
+        if (role === "donor") {
           navigate("/Dashboard");
-        }else if(role === "agent"){
+        } else if (role === "agent") {
           navigate("/AgentDashboard");
         }
       } catch (err) {
@@ -42,7 +43,6 @@ const Login = () => {
       toast.error("Please fill all inputs");
     }
   };
-
 
   return (
     <div className="Login-Page">

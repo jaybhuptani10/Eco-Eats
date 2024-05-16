@@ -20,9 +20,6 @@ const About = () => {
         <h1>
           Jay Bhuptani <div className="user">Front-End Developer, & UI</div>
         </h1>
-        <h1>
-          Stavan Mehta <div className="user">Tester & UI</div>
-        </h1>
 
         <h1>
           Vidhan Prajapti{" "}
