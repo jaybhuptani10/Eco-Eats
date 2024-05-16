@@ -41,7 +41,7 @@ const Main = ({ data, setTouch, setData }) => {
       <AnimatePresence>
         {selectedId !== null && <Modal onClose={handleCloseModal} />}
       </AnimatePresence>
-      {/* <Try /> */}
+      <Try />
     </motion.div>
   );
 };

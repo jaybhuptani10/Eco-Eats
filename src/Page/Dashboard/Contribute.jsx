@@ -1,67 +1,98 @@
-import React from "react";
+import React, { useState } from "react";
 import "./dashboard.css";
 import { motion } from "framer-motion";
 import IMG from "./truck.png";
-const Contribute = () => {
-  const onSubmitClick = () => {
-    setTimeout(() => {}, 2000);
-    variants = {
-      open: { opacity: 1, x: 0 },
-      close: { opacity: 0, x: "100%" },
-    };
+import axios from "axios";
+const ContributeFood = () => {
+  const [donation, setDonation] = useState({
+    wasteType: "ewaste",
+    quantity: "",
+    address: "",
+    phone: "",
+    donorToAgentMsg: "",
+    collectionTime: "",
+  });
+
+  const handleChange = (e) => {
+    setDonation({ ...donation, [e.target.name]: e.target.value });
   };
+
+  const handleSubmit = async (e) => {
+    try {
+      const response = await axios.post(
+        "https://eco-eats-backend.vercel.app/api/donor/donate",
+        { donation },
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="Contribute">
-      <form className="forms" action="">
-        <label htmlFor="Hy">
-          E-Waste Type
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="quantity">
+          EWaste Description
           <input
             className="entry"
             type="text"
-            name="type"
-            placeholder="E-waste type"
-            id=""
+            placeholder="Describe"
+            name="quantity"
+            value={donation.quantity}
+            onChange={handleChange}
           />
         </label>
-
-        <label htmlFor="">
-          Descibe Your E-waste in detail
-          <input
-            className="entry"
-            type="text"
-            placeholder="Describe Your E-waste in detail"
-            name=""
-            id=""
-          />
-        </label>
-        <label htmlFor="">
-          Pickup Address{" "}
+        <label htmlFor="address">
+          Pickup Address
           <input
             className="entry"
             name="address"
             type="text"
+            value={donation.address}
             placeholder="Pickup Address"
+            onChange={handleChange}
           />
         </label>
-        <label htmlFor="">
+        <label htmlFor="pickupTime">
           Pickup Time
           <input
             className="entry"
             type="datetime-local"
-            name="pickupTime"
-            placeholder="Pickup Time"
-            id=""
+            name="collectionTime"
+            value={donation.collectionTime}
+            onChange={handleChange}
           />
         </label>
-        <label htmlFor="">
-          Any message for agent{" "}
-          <input className="entry" type="text" name="" id="" />
+        <label htmlFor="pickupTime">
+          Phone
+          <input
+            className="entry"
+            type="text"
+            name="phone"
+            value={donation.phone}
+            onChange={handleChange}
+          />
         </label>
-        <label htmlFor="">
-          Upload a pic of your waste
-          <input type="file" name="" id="" />
+        <label htmlFor="donorToAgentMsg">
+          Any message for agent
+          <input
+            className="entry"
+            type="text"
+            name="donorToAgentMsg"
+            value={donation.donorToAgentMsg}
+            placeholder="Message for agent"
+            onChange={handleChange}
+          />
         </label>
-        <button className="contributebtn" onClick={() => onSubmitClick()}>
+        <label htmlFor="donationPic">
+          Upload a pic of your Ewaste
+          <input type="file" name="donationPic" id="" onChange={handleChange} />
+        </label>
+        <button className="contributebtn" type="submit">
           Submit
         </button>
       </form>
@@ -70,4 +101,4 @@ const Contribute = () => {
   );
 };
 
-export default Contribute;
+export default ContributeFood;

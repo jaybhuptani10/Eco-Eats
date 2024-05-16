@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { AiFillSkin } from "react-icons/ai";
+
 import "./dashboard.css";
 import Modal from "./Modal";
-import Try from "./Try";
-import PlotlyComponent from "./PlotlyComponent";
 
-const Main = ({ data, setTouch, setData }) => {
+const Main = ({ data, setTouch, setData, New }) => {
+  const dabba = [data];
+  console.log(data);
+
   const [selectedId, setSelectedId] = useState(null);
 
   const handleOpenModal = (index) => {

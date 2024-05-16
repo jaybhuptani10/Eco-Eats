@@ -4,7 +4,7 @@ import Navbar from "../../components/navbar/Navbar";
 import Leftnav from "./Leftnav";
 import Hero from "./Hero";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import IMG from "./donation.png";
 import IMG2 from "./electro.png";
 import IMG3 from "./Food.png";
@@ -14,71 +14,126 @@ import Profile from "./Profile";
 import ContributeFood from "./ContributeFood";
 import ContributeClothes from "./ContributeClothes";
 import Main from "./Main";
+import axios from "axios";
+import { IoClose } from "react-icons/io5";
 const Dashboard = () => {
-  const [touch, setTouch] = useState(0);
-  const [data, setData] = useState(false);
-  const [main, setmain] = useState([
-    {
-      count: 3,
-      name: "Total Donations",
-      img: IMG,
-    },
+  const navigate = useNavigate();
 
-    {
-      count: 1,
-      name: "E-waste Donations",
-      img: IMG2,
-    },
-    {
-      count: 1,
-      name: "Food Donations",
-      img: IMG3,
-    },
-    {
-      count: 1,
-      name: "Cloths Donations",
-      img: IMG4,
-    },
-  ]);
+  const [main, setMain] = useState([]);
+  const [New, setNew] = useState([]);
+  const [accepted, setAccepted] = useState([]);
+  const [rejected, setRejected] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://eco-eats-backend.vercel.app/api/agent/dashboard",
+          {
+            withCredentials: true,
+          }
+        );
+        if (response.status === 200) {
+          const {
+            TotalDonations,
+            EWasteDonations,
+            FoodDonations,
+            ClothsDonations,
+            numDonors,
+          } = response.data;
+          setMain([
+            { count: numDonors, name: "Number of Donors", img: IMG },
+            { count: TotalDonations, name: "Total Donations", img: IMG },
+            { count: EWasteDonations, name: "E-waste Donations", img: IMG2 },
+            { count: FoodDonations, name: "Food Donations", img: IMG3 },
+            { count: ClothsDonations, name: "Cloths Donations", img: IMG4 },
+          ]);
+        }
+        {
+          console.error("Error in fetching data", response.data.message);
+        }
+      } catch (err) {
+        if (err.response && err.response.status === 401) {
+          // User is not authenticated, redirect to login page
+          console.log(
+            "User is not authenticated. Redirecting to login page..."
+          );
+          navigate("/login"); // Adjust the URL as needed
+        }
+        console.error(err);
+      }
+    };
+    fetchData();
+  }, []);
+  try {
+    useEffect(() => {
+      const fetchDonations = async () => {
+        try {
+          const response = await axios.get(
+            "https://eco-eats-backend.vercel.app/api/agent/donations/pending",
+            {
+              withCredentials: true,
+            }
+          );
+          setNew(response.data.pendingCollections);
+        } catch (err) {
+          console.error(err);
+        }
+      };
 
-  const Ewaste = [
-    {
-      Type: "E-waste",
-      "Pickup Time": "27 January 2023",
-      address: "Delhi",
-      phone: "1234567890",
-    },
-  ];
-  const Food = [
-    {
-      Type: "Food DOnation",
-      "Pickup Time": "28 January 2023",
-      address: "Delhi",
-      phone: "1264567890",
-    },
-  ];
-  const Clothes = [
-    {
-      Type: "Clothes Donation",
-      "Pickup Time": "20 January 2023",
-      address: "Ahmeabad",
-      phone: "1264567890",
-    },
-  ];
+      fetchDonations();
+    }, []);
+  } catch (error) {
+    console.error(error);
+  }
+  try {
+    useEffect(() => {
+      const fetchDonations = async () => {
+        try {
+          const response = await axios.get(
+            "https://eco-eats-backend.vercel.app/api/agent/donations/accepted",
+            {
+              withCredentials: true,
+            }
+          );
+          setAccepted(response.data.acceptedCollections);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
+      fetchDonations();
+    }, []);
+  } catch (error) {
+    console.error(error);
+  }
+  try {
+    useEffect(() => {
+      const fetchDonations = async () => {
+        try {
+          const response = await axios.get(
+            "https://eco-eats-backend.vercel.app/api/agent/donations/rejected",
+            {
+              withCredentials: true,
+            }
+          );
+          setRejected(response.data.rejectedCollections);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
+      fetchDonations();
+    }, []);
+  } catch (error) {
+    console.error(error);
+  }
+
   const [tabDashboard, setTabDashboard] = useState(true);
   const [tabNew, setTabENew] = useState(false);
   const [tabAccepted, setTabAccepted] = useState(false);
   const [tabRejected, setTabRejected] = useState(false);
   const [tabProfile, setTabProfile] = useState(false);
-  // useEffect(() => {
-  //   if (touch === true) {
-  //     setTabDashboard(false);
-  //     setTabEwaste(true);
-  //     setTabFood(false);
-  //     setTabClothes(false);
-  //     setTabProfile(false);
-  //   }
-  // });
+
   const onTabSelected = (e) => {
     if (e.target.innerText === "Dashboard") {
       setTabDashboard(true);
@@ -167,9 +222,9 @@ const Dashboard = () => {
         <div className="right-dashboardd">
           {tabDashboard && <Main data={main} />}
 
-          {tabNew && <Hero data={main} />}
-          {tabAccepted && <Hero data={main} />}
-          {tabRejected && <Hero data={main} />}
+          {tabNew && <Hero data={main} ok={New} />}
+          {tabAccepted && <Hero data={main} ok={accepted} />}
+          {tabRejected && <Hero data={main} ok={rejected} />}
 
           {tabProfile && <Profile />}
         </div>

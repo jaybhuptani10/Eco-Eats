@@ -9,6 +9,7 @@ import Cards from "../components/cards/Cards";
 import Footer from "../components/footer/Footer";
 import "./style.css";
 import Chatbot from "../components/chatbot/Chatbot";
+import Try from "./Dashboard/Try";
 
 const Home = () => {
   return (
@@ -22,6 +23,7 @@ const Home = () => {
       <Eyes />
       <Featured />
       <Cards />
+      
       <Footer />
     </div>
   );

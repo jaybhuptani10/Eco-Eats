@@ -49,6 +49,59 @@
     color: white;
 }
 
+.loaders{
+  position: absolute;
+  top: -65%;
+}
+.new{
+font-family: system-ui, sans-serif;
+  font-size: 1.5rem;
+  width: 100%;
+  height: clamp(5rem, 10vw, 15rem);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+  color: hsl(220 40% 35%);
+  
+  background-color: hsl(220 20% 95%);
+}
+.avatars {
+    --avatar-count: 8;
+    --avatar-size: clamp(3rem, 6vw, 8rem);
+  
+    --column-size: calc(var(--avatar-size) / 2);
+    
+    display: grid;
+    grid-template-columns: repeat(var(--avatar-count), var(--column-size));
+    transition: 500ms;
+    transition-delay: 500ms;
+  }
+  
+  .avatars:hover {
+    --column-size: calc(var(--avatar-size) *0.8);
+    transition-delay: 0ms;
+  }
+  
+  .avatar {
+    width: var(--avatar-size);
+    border-radius: 100vw;
+    border: 5px solid white;
+    box-shadow: 0.25rem 0.25rem 0.5rem hsl(0 0% 0% / 0.2);
+  
+    transition: scale 500ms;
+  }
+  
+  .avatar:hover {
+    scale: 2;
+    z-index: 2;
+  }
+  
+  @supports selector(:has(+ *)) {
+    .avatar:hover + .avatar,
+    .avatar:has(+ .avatar:hover) {
+      scale: 1.5;
+    }
+  }
 @media (max-width:500px){
     .body h1 .user{
         opacity: 0;

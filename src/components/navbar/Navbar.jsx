@@ -6,12 +6,14 @@ import { CgProfile } from "react-icons/cg";
 import { CiMenuBurger } from "react-icons/ci";
 import { IoClose } from "react-icons/io5";
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 
 const Navbar = () => {
   const location = useLocation(); // Hook to get current location
   const [menu, setMenu] = React.useState(false);
   const [open, close] = useState(true);
   const [navblack, setNavBlack] = useState(false);
+  const [dash, setDash] = useState(false);
   const onMenuClick = () => {
     setMenu(!menu);
     close(!open);
@@ -22,6 +24,7 @@ const Navbar = () => {
     if (location.pathname === "/") {
       setNavBlack(false);
     } else if (location.pathname === "/Dashboard") {
+      setDash(true);
       setNavBlack(false);
 
       if (window.innerWidth < 800) {
@@ -35,6 +38,7 @@ const Navbar = () => {
         setNavBlack(true);
       }
     } else if (location.pathname === "/AgentDashboard") {
+      setDash(true);
       setNavBlack(false);
       if (window.innerWidth < 800) {
         // Replace 800 with your desired value
@@ -62,6 +66,29 @@ const Navbar = () => {
     } else {
       navigate("/");
       setNavBlack(false);
+    }
+  };
+  const handleLogout = async () => {
+    try {
+      // Make an API call using Axios
+      const response = await axios.get(
+        "http://localhost:4000/api/auth/logout",
+        {
+          withCredentials: true, // Include cookies
+        }
+      );
+
+      if (response.status === 200) {
+        // Logout successful
+        console.log("Logout successful");
+        navigate("/login");
+        // You can also redirect the user to a login page or perform any other action
+      } else {
+        // Handle error response
+        console.error("Error occurred during logout");
+      }
+    } catch (error) {
+      console.error("Error occurred during logout:", error);
     }
   };
   return (
@@ -109,6 +136,12 @@ const Navbar = () => {
         )}
 
         <CgProfile onClick={() => navigate("/Dashboard")} className="Profile" />
+        <button
+          onClick={handleLogout}
+          className={`${dash ? "logout" : "hide"}`}
+        >
+          Log Out
+        </button>
       </div>
     </div>
   );

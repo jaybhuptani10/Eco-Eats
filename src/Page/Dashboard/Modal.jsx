@@ -1,7 +1,8 @@
 import React from "react";
 import { FaWindowClose } from "react-icons/fa";
 import { motion } from "framer-motion";
-const Modal = ({ onClose }) => {
+import { IoClose } from "react-icons/io5";
+const Modal = ({ onClose, data }) => {
   const dropIn = {
     hidden: {
       y: "-100vh",
@@ -27,12 +28,17 @@ const Modal = ({ onClose }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: "100vh" }}
       transition={{ duration: 0.5 }}
-      className="Modal"
+      className="Modall"
     >
+      <IoClose className="Icon-close" onClick={onClose} />{" "}
       <div className="Modal-content">
-        <FaWindowClose onClick={onClose} />{" "}
         {/* Call onClose function on click */}
-        <h1>Modal</h1>
+        <p>E-Waste Type : {data.quantity}</p>
+        <p>Phone Number : {data.phone}</p>
+        <p>Collection Time: {new Date(data.collectionTime).toLocaleString()}</p>
+        <p>Address : {data.address}</p>
+        <p> Extra Remarks : {data.donorToAgentMsg}</p>
+        <p>Status : {data.status}</p>
       </div>
     </motion.div>
   );

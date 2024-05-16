@@ -7,47 +7,46 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const Signup = () => {
   const navigate = useNavigate();
-  const [token, setToken] = useState(
-    JSON.parse(localStorage.getItem("auth")) || ""
-  );
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password1: "",
+    password2: "",
+    role: "donor", // Default role
+  });
+
+  const { firstName, lastName, email, password1, password2, role } = formData;
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-    let name = e.target.name.value;
-    // let lastname = e.target.lastname.value;
-    let email = e.target.email.value;
-    let password = e.target.password.value;
-
-    let role = e.target.role.value;
 
     if (
-      name.length > 0 &&
-      email.length > 0 &&
-      password.length > 0 &&
-      role.length > 0
+      firstName &&
+      lastName &&
+      email &&
+      password1 &&
+      password2 &&
+      role &&
+      password1 === password2
     ) {
-      if (password > 0) {
-        const formData = {
-          username: name,
-          email,
-          password,
-          role,
-        };
-        try {
-          const response = await axios.post(
-            "http://localhost:3000/api/register",
-            formData
-          );
-          console.log("Registration successfull");
-          navigate("/Login");
-        } catch (err) {
-          console.log(err.message);
-        }
-      } else {
-        console.log("Passwords don't match");
+      try {
+        const response = await axios.post(
+          "https://eco-eats-backend.vercel.app/api/auth/signup",
+          formData
+        );
+        console.log("Registration successful");
+        navigate("/login");
+      } catch (err) {
+        console.error("Error during registration:", err.message);
       }
     } else {
-      console.log("Please fill all inputs");
+      console.log("Please fill in all fields and ensure passwords match");
     }
   };
 
@@ -62,19 +61,57 @@ const Signup = () => {
           <div className="inputss">
             <div className="input">
               <FaRegUser className="img" />
-              <input type="text" placeholder="name" name="name" id="" />
+              <input
+                type="text"
+                placeholder="firstname"
+                name="firstName"
+                id=""
+                value={firstName}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input">
+              <FaRegUser className="img" />
+              <input
+                type="text"
+                placeholder="lastname"
+                name="lastName"
+                id=""
+                value={lastName}
+                onChange={handleChange}
+              />
             </div>
             <div className="input">
               <MdAlternateEmail className="img" />
-              <input type="email" placeholder="E-mail" name="email" id="" />
+              <input
+                type="email"
+                placeholder="E-mail"
+                name="email"
+                id=""
+                value={email}
+                onChange={handleChange}
+              />
             </div>
             <div className="input">
               <RiLockPasswordFill className="img" />
               <input
                 type="password"
                 placeholder="password"
-                name="password"
+                name="password1"
                 id=""
+                value={password1}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input">
+              <RiLockPasswordFill className="img" />
+              <input
+                type="password"
+                placeholder="password"
+                name="password2"
+                id=""
+                value={password2}
+                onChange={handleChange}
               />
             </div>
 
@@ -82,18 +119,19 @@ const Signup = () => {
               style={{ padding: "20px" }}
               className="input"
               name="role"
+              value={role}
+              onChange={handleChange}
               type="text"
               placeholder="Choose Your Role"
               required={true}
             >
-              <option value="Agent">Agent</option>
-              <option value="Donor">Donor</option>
+              <option value="donor">Donor</option>
+              <option value="agent">Agent</option>
             </select>
           </div>
           <div className="submit-container">
             <button
               style={{ backgroundColor: "#4C00B4" }}
-              onSubmit={() => handleRegisterSubmit}
               className="submit"
               type="submit"
             >

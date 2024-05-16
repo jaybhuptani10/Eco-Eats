@@ -6,7 +6,7 @@
 }
 .Dashboard{
     
-    min-height: 100vh;
+    
     min-width: 100%;
     background-color: black;
     color: white;
@@ -109,16 +109,78 @@
     text-align: center;
 
 }
+.card-bg-yellow{
+    background-color: yellow;
+   
+}
+.card-bg-green{
+    background-color: rgb(34, 170, 86);
+   
+}
+.card-bg-red{
+    background-color: red;
+}
 
-
-.Modal{
+.Modall{
+    position: absolute;
+    top: 12%;
+    left:25%;
+    border: 1px solid rgb(0, 0, 0);
+    /* //box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); */
+    overflow: hidden;
     border-radius: 20px;
-    width: 70%;
-    height: 75%;
-    z-index: 100;
+    width: 55%;
+    height: clamp(400px, 30vw, 501px);
+    z-index: 1000;
     background-color: white;
     position: absolute;
     color: black;
+}
+.Modall .Modal-content{
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+    height: 100%;
+    width: 100%;
+
+}
+.Modal .Modal-content p{
+    padding: 0 20px;
+    font-size: clamp(1rem, 1.5vw, 1.7rem);
+    width: 90%;
+    border-bottom: 1px solid black;
+    color: black;
+    margin-top: 20px;
+}
+.Icon-close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: clamp(1rem, 2.2vw, 2.3rem);
+    cursor: pointer;
+}
+.buts{
+    margin-top: 50px;
+    width: 100%;
+    
+    display: flex;
+    
+   
+    justify-content: space-around;
+    align-items: center;
+}
+.but:not(:last-child){
+    background-color: green;
+}
+.but{
+    
+    height: clamp(30px, 3vw, 40px);
+    width: 30%;
+    border-radius: 20px;
+    background-color: rgb(255, 0, 0);
+    color: white;
 }
 .Contribute{
     overflow: hidden;
@@ -233,12 +295,17 @@ label .entry{
     cursor: pointer;
     transition: 0.5s ease-in-out;
 }
-
+.confetti-hidden{
+    opacity: 0;
+}
+.confetti-display{
+    opacity: 1;
+}
 
 
 @media(max-width:500px){
     .Dashboard{
-    
+        min-height: 200vh;
         flex-direction: column;
         
     }
@@ -261,6 +328,7 @@ label .entry{
         
     }
     .carddss{
+       
         margin-top: 50px;
         justify-content: center;
 
@@ -268,6 +336,17 @@ label .entry{
     .forms{
         width: 100%;
     }
+    .Modall{
+        left: 17%;
+        width: 70%;
+        
+
+    }
+    .Modal .Modal-content{
+        padding: 20px;
+        
+    }
+    
     
     
    
@@ -280,7 +359,10 @@ label .entry{
     .right-dashboardd{
         padding: 50px;
     }
-    
+    .Modall .Modal-content{
+        padding: 50px 100px;
+        
+    }
     /* .left-navi{
        
         width: 20%;

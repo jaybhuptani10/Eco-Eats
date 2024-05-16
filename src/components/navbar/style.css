@@ -23,6 +23,21 @@
     object-position: center;
     
 }
+.logout{
+    width: 13%;
+    border: 1px solid white;
+   
+    height: 10%;
+    
+}
+.hide{
+    display: none;
+}
+.logout:hover{
+    background-color: white;
+    color: black;
+    transition: 0.5s ease-in-out;
+}
 .links{
     display: flex;
     gap: 20px; 
